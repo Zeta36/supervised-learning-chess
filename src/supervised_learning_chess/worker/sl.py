@@ -255,7 +255,7 @@ class OptimizeWorker:
         model = ChessModel(self.config)
         rc = self.config.resource
 
-        dirs = rc.config.resource.model_best_config_path
+        dirs = rc.resource.model_best_config_path
         if not dirs:
             model.build()
             save_as_best_model(model)
