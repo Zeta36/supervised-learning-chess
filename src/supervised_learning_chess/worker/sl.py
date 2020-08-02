@@ -265,11 +265,7 @@ class OptimizeWorker:
         else:
             latest_dir = dirs[-1]
             logger.debug(f"loading latest model")
-            config_path = os.path.join(
-                latest_dir, rc.next_generation_model_config_filename)
-            weight_path = os.path.join(
-                latest_dir, rc.next_generation_model_weight_filename)
-            model.load(config_path, weight_path)
+            load_best_model_weight(model)
         return model
 
     def load_play_data(self):
