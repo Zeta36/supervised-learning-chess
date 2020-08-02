@@ -8,8 +8,7 @@ from supervised_learning_chess.agent.player_chess import ChessPlayer
 from supervised_learning_chess.config import Config
 from supervised_learning_chess.env.chess_env import ChessEnv, Winner
 from supervised_learning_chess.lib import tf_util
-from supervised_learning_chess.lib.data_helper import get_game_data_filenames, write_game_data_to_file, find_pgn_files, read_game_data_from_file, \
-    get_next_generation_model_dirs
+from supervised_learning_chess.lib.data_helper import get_game_data_filenames, write_game_data_to_file, find_pgn_files, read_game_data_from_file
 from supervised_learning_chess.lib.model_helper import load_best_model_weight, save_as_best_model, \
     reload_best_model_weight_if_changed
 import random
@@ -256,7 +255,7 @@ class OptimizeWorker:
         model = ChessModel(self.config)
         rc = self.config.resource
 
-        dirs = get_next_generation_model_dirs(rc)
+        dirs = rc.config.resource.model_best_config_path
         if not dirs:
             model.build()
             save_as_best_model(model)
