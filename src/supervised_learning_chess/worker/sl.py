@@ -45,11 +45,12 @@ class SupervisedLearningWorker:
         self.black = None  # type: ChessPlayer
         self.white = None  # type: ChessPlayer
         self.buffer = []
-        self.optimizer = OptimizeWorker(config)
+        self.optimizer = None
 
     def start(self):
         if self.model is None:
             self.model = self.load_model()
+        self.optimizer = OptimizeWorker(self.config)
 
         self.buffer = []
         idx = 1
@@ -262,10 +263,11 @@ class OptimizeWorker:
             logger.debug(f"loading best model")
             if not load_best_model_weight(model):
                 raise RuntimeError(f"Best model can not loaded!")
-        else:
-            latest_dir = dirs[-1]
+        else:            
             logger.debug(f"loading latest model")
-            load_best_model_weight(model)
+            config_path = rc.model_best_config_path
+            weight_path = rc.model_best_weight_path
+            model.load(config_path, weight_path)            
         return model
 
     def load_play_data(self):
